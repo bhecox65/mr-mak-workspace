@@ -142,3 +142,15 @@ test('agent environment forwards only explicitly scoped MCP values from the proj
   assert.equal(env.MRMAK_MCP_FIXTURE_VALUE,'mcp-value');
   assert.notEqual(env.OPENAI_KEY,'private-voice-key'); assert.notEqual(env.UNRELATED_FIXTURE_KEY,'private-value');
 });
+
+test('an empty or blank MCP file reads as no servers, while broken JSON still reports a problem', async () => {
+  const { repo, home, inventory } = await fixture();
+  const gemini = path.join(home, '.gemini/config/mcp_config.json');
+  await mkdir(path.dirname(gemini), { recursive: true });
+  await writeFile(gemini, '');
+  await writeFile(path.join(repo, '.mcp.json'), ' \n\t');
+  const empty = await inventory.list();
+  assert.deepEqual(empty.problems, []); assert.deepEqual(empty.servers, []);
+  await writeFile(gemini, '{"mcpServers":');
+  assert.deepEqual((await inventory.list()).problems.map(item => item.path), [gemini]);
+});

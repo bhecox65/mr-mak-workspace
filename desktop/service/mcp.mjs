@@ -38,6 +38,8 @@ export class McpInventory {
       try {
         if ((await stat(file)).size > 8 * 1024 * 1024) throw new Error('large');
         const text = (await readFile(file, 'utf8')).replace(/^\uFEFF/, '');
+        // Antigravity creates an empty mcp_config.json until a server is added.
+        if (!text.trim()) return {};
         return file.endsWith('.toml') ? toml(text) : JSON.parse(text);
       } catch (error) {
         if (error.code !== 'ENOENT') problems.push({ path: file, message: 'Configuration could not be read. Check its format and file permissions.' });
