@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add independent Workspace and Chat themes with thirteen named palettes: Codex / ChatGPT, Antigravity, Claude Code, and light/dark variants of Nordic, Forest, Sandstone, Ocean and Plum. Saved choices sync across windows and apply to standard reports, Conversation and Terminal without losing drafts or reconnecting the CLI. Reading text and action labels maintain at least 4.5:1 contrast.
+
 ## 0.5.2 - 2026-10-18
 
 - Group chat tabs with named, coloured headers. Drag or collapse a group, manage it from a tab's right-click menu, and find groups in History. Deleting a group keeps its chats. Pinned tabs retain their separate order.
