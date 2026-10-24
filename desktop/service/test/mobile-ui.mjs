@@ -582,9 +582,18 @@ try {
   assert.equal(await input.inputValue(), 'Keep this draft while I switch chats.');
 
   const beforeKeys = writes.length;
-  for (const name of ['Arrow left', 'Arrow up', 'Arrow down', 'Arrow right']) await phone.getByRole('button', { name, exact: true }).click();
-  await phone.waitForTimeout(100);
-  assert.deepEqual(writes.slice(beforeKeys), ['\x1b[D', '\x1b[A', '\x1b[B', '\x1b[C'].map(data => ({ id: ids[1], data })));
+  const arrowKeys = [['Arrow left', '\x1b[D'], ['Arrow up', '\x1b[A'], ['Arrow down', '\x1b[B'], ['Arrow right', '\x1b[C']];
+  for (const [index, [name]] of arrowKeys.entries()) {
+    // A tap only dispatches input; delivery happens asynchronously over HTTP.
+    // Wait for each reply and verify the exact terminal writes, even on a slow runner.
+    const [response] = await Promise.all([
+      phone.waitForResponse(response => response.url().endsWith(`/mobile/api/sessions/${ids[1]}/key`) && response.request().method() === 'POST'),
+      phone.getByRole('button', { name, exact: true }).tap(),
+    ]);
+    assert.equal(response.status(), 200, `${name} is accepted`);
+    assert.deepEqual(await response.json(), { delivered: true });
+    assert.deepEqual(writes.slice(beforeKeys), arrowKeys.slice(0, index + 1).map(([, data]) => ({ id: ids[1], data })), `${name} is delivered once, in order`);
+  }
   for (const width of [320, 390]) {
     await phone.setViewportSize({ width, height: 844 });
     await expect.poll(() => phone.locator('.mobile-terminal-reader').evaluate(node => node.scrollWidth - node.clientWidth), { message: `Wrapped terminal needs no horizontal scrolling at ${width}px` }).toBeLessThanOrEqual(1);
