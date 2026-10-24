@@ -12,6 +12,7 @@
 - Keep desktop window credentials in memory, with native reload recovery. Bundle Inter and Fraunces locally so the app UI does not request Google Fonts.
 - Limit phone pairing attempts per source, invalidate repeatedly guessed codes, and expire phones after 30 idle days.
 - Enforce the selected permission default when the coordinator sends to or reopens an existing bypass chat.
+- Preserve typographic apostrophes as literal text in Windows command shims and pasted shell paths.
 - Refresh six service dependency versions to clear the current npm audit findings.
 - Read optional mesh-generation credentials from the Hugging Face login or environment, and update the video downloader minimum version. The Linux glib dependency advisory remains an upstream follow-up, documented in SECURITY.md.
 
