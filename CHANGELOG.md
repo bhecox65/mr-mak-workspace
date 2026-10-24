@@ -1,12 +1,19 @@
 # Changelog
 
-## Unreleased
+## 0.6.1 - 2026-10-24
 
 - Reduce unnecessary drawing in the sidebar logo and 3D viewer. Static models stop submitting frames, while camera controls, shading changes and restored graphics contexts still repaint.
 - Update the Rust toolchain action to the reviewed commit pin.
 - MCP lists the servers of Claude plugins that claude.ai syncs to the signed-in account (for example PDF Viewer), with the same on/off state Claude Code uses. claude.ai connectors are not stored on the computer, so the panel points to `/mcp` in a Claude chat for them.
 - An empty MCP configuration file, as Antigravity creates before a server is added, no longer shows a read error in MCP.
 - Add independent Workspace and Chat themes with thirteen named palettes: Codex / ChatGPT, Antigravity, Claude Code, and light/dark variants of Nordic, Forest, Sandstone, Ocean and Plum. Saved choices sync across windows and apply to standard reports, Conversation and Terminal without losing drafts or reconnecting the CLI. Reading text and action labels maintain at least 4.5:1 contrast.
+
+- Restrict desktop HTML and SVG previews to the selected report folder, with expiring access and an opaque sandbox. Keep local report assets, theme changes and external links working.
+- Keep desktop window credentials in memory, with native reload recovery. Bundle Inter and Fraunces locally so the app UI does not request Google Fonts.
+- Limit phone pairing attempts per source, invalidate repeatedly guessed codes, and expire phones after 30 idle days.
+- Enforce the selected permission default when the coordinator sends to or reopens an existing bypass chat.
+- Refresh six service dependency versions to clear the current npm audit findings.
+- Read optional mesh-generation credentials from the Hugging Face login or environment, and update the video downloader minimum version. The Linux glib dependency advisory remains an upstream follow-up, documented in SECURITY.md.
 
 ## 0.5.2 - 2026-10-18
 

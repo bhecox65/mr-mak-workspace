@@ -5,7 +5,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 import { createService } from '../server.mjs';
-import { launchBrowser } from './browser.mjs';
+import { launchBrowser, desktopAuth } from './browser.mjs';
 import { themes } from '../appearance.mjs';
 
 async function readable(locator, background, description) {
@@ -45,6 +45,7 @@ try {
   await new Promise(resolve => session.terminal.write('Theme preview: native terminal stays connected.\r\n\x1b[32m+ added line\x1b[0m\r\n\x1b[31m- removed line\x1b[0m\r\n', resolve));
   browser = await launchBrowser();
   const context = await browser.newContext({ viewport: { width: 1300, height: 920 }, colorScheme: 'dark' });
+  await desktopAuth(context, service.urls.workspace);
   const page = await context.newPage(), second = await context.newPage(), chats = await context.newPage();
   await chats.route('**/api/sessions/theme-chat/messages', route => route.fulfill({ json: { supported: true, messages: [
     { id: 'u1', role: 'user', text: 'Give these ideas a clear place to grow.', at: '2026-10-20T12:00:00Z' },

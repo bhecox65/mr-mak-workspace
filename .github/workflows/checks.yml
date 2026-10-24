@@ -21,6 +21,7 @@ jobs:
       - run: npm run test:preview
       - run: npm run test:gpu
       - run: node desktop/service/test/theme-ui.mjs
+      - run: node desktop/service/test/links-ui.mjs
       - run: node desktop/service/test/voice-ui.mjs
       - run: node desktop/service/test/clipboard-ui.mjs
       - run: node desktop/service/test/desktop-dictation-ui.mjs
@@ -103,6 +104,7 @@ jobs:
       - run: npx playwright install webkit
       - run: npm run test:preview
       - run: node desktop/service/test/theme-ui.mjs
+      - run: node desktop/service/test/links-ui.mjs
       - run: node desktop/service/test/voice-ui.mjs
       - run: node desktop/service/test/groups-ui.mjs
       - run: node desktop/service/test/conversation-ui.mjs
