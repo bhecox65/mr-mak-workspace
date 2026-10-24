@@ -196,6 +196,7 @@ export class ModelViewer {
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping
     this.renderer.toneMappingExposure = 1.05
     container.appendChild(this.renderer.domElement)
+    this.renderer.domElement.addEventListener('webglcontextrestored', this.onContextRestored)
 
     this.camera = new THREE.PerspectiveCamera(45, 1, 0.01, 200)
     this.camera.position.set(0, 0.4, 4)
@@ -584,11 +585,18 @@ export class ModelViewer {
     }
   }
 
+  // An idle viewer no longer renders every frame. Once the browser rebuilds
+  // the WebGL context, redraw its contents even if the camera has not moved.
+  private onContextRestored = (): void => {
+    this.dirty = true
+  }
+
   dispose(): void {
     this.disposed = true
     cancelAnimationFrame(this.raf)
     this.ro.disconnect()
     this.controls.dispose()
+    this.renderer.domElement.removeEventListener('webglcontextrestored', this.onContextRestored)
     this.clearModel()
     this.envRT?.dispose()
     this.pmrem.dispose()

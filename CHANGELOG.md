@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Reduce unnecessary drawing in the sidebar logo and 3D viewer. Static models stop submitting frames, while camera controls, shading changes and restored graphics contexts still repaint.
+- Update the Rust toolchain action to the reviewed commit pin.
 - MCP lists the servers of Claude plugins that claude.ai syncs to the signed-in account (for example PDF Viewer), with the same on/off state Claude Code uses. claude.ai connectors are not stored on the computer, so the panel points to `/mcp` in a Claude chat for them.
 - An empty MCP configuration file, as Antigravity creates before a server is added, no longer shows a read error in MCP.
 - Add independent Workspace and Chat themes with thirteen named palettes: Codex / ChatGPT, Antigravity, Claude Code, and light/dark variants of Nordic, Forest, Sandstone, Ocean and Plum. Saved choices sync across windows and apply to standard reports, Conversation and Terminal without losing drafts or reconnecting the CLI. Reading text and action labels maintain at least 4.5:1 contrast.
