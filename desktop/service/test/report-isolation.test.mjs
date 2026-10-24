@@ -1,12 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, writeFile, symlink } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, symlink, realpath } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import { createService } from '../server.mjs';
 
 test('script-capable documents get an opaque origin and an expiring grant for their own folder', async () => {
-  const base = await mkdtemp(path.join(os.tmpdir(), 'mrmak-report-isolation-'));
+  // macOS /var and Windows runner short paths can alias the canonical temp folder.
+  const base = await realpath(await mkdtemp(path.join(os.tmpdir(), 'mrmak-report-isolation-')));
   const repo = path.join(base, 'repo'), outside = path.join(base, 'downloads');
   for (const folder of ['workspace/card/assets', 'workspace/other', 'workspace/_shared', 'context', 'ui']) await mkdir(path.join(repo, folder), { recursive: true });
   await mkdir(outside);
