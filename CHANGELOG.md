@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- MCP lists the servers of Claude plugins that claude.ai syncs to the signed-in account (for example PDF Viewer), with the same on/off state Claude Code uses. claude.ai connectors are not stored on the computer, so the panel points to `/mcp` in a Claude chat for them.
+- An empty MCP configuration file, as Antigravity creates before a server is added, no longer shows a read error in MCP.
+
 ## 0.5.2 - 2026-10-18
 
 - Group chat tabs with named, coloured headers. Drag or collapse a group, manage it from a tab's right-click menu, and find groups in History. Deleting a group keeps its chats. Pinned tabs retain their separate order.
